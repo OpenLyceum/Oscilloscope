@@ -1,6 +1,6 @@
 # CLAUDE.md — Oscilloscope
 
-Sim-specific context for AI assistants. General SceneryStack guidance: [OpenPhysics/.github/CLAUDE.md](https://github.com/OpenPhysics/.github/blob/main/CLAUDE.md).
+Sim-specific context for AI assistants. General SceneryStack guidance: [OpenLyceum/.github/CLAUDE.md](https://github.com/OpenLyceum/.github/blob/main/CLAUDE.md).
 
 ## Project
 
@@ -21,7 +21,7 @@ The defining UI decision: **the scope's own front panel is built from real-instr
 rotary knobs, detented rotary switches, and panel buttons, never sliders.** The function generator
 is deliberately the exception: it is a *separate bench instrument* sitting under the CRT, patched in
 over cables, and it uses sliders and a combo box so it reads as a different box rather than more
-scope panel. Forked from `OpenPhysics/SceneryStackTemplate`, it keeps that template's **canonical
+scope panel. Forked from `OpenLyceum/SceneryStackTemplate`, it keeps that template's **canonical
 accessibility** wiring. For multi-screen sims, see [`doc/multi-screen.md`](doc/multi-screen.md).
 
 ### Simulation architecture
@@ -232,7 +232,7 @@ three required layers are wired up: PDOM names on every interactive node, a live
 `OscilloscopeScreenSummaryContent` whose `currentDetailsContent` is a `DerivedProperty` over model
 state, and an explicit `pdomOrder` + `OscilloscopeKeyboardHelpContent`. A11y strings live under the
 `a11y` key in each locale JSON, exposed via `StringManager.getA11yStrings()`. Full convention and
-checklist: [Baton/ACCESSIBILITY.md](https://github.com/OpenPhysics/Baton/blob/main/ACCESSIBILITY.md).
+checklist: [Baton/ACCESSIBILITY.md](https://github.com/OpenLyceum/Baton/blob/main/ACCESSIBILITY.md).
 
 Sim-specific notes:
 

@@ -3,7 +3,7 @@
  *
  * The accessible screen summary read by screen readers. Its "current details"
  * paragraph is a LIVE, localized description derived from model state — the
- * canonical OpenPhysics pattern — so a non-visual user can re-read what the
+ * canonical OpenLyceum pattern — so a non-visual user can re-read what the
  * oscilloscope is currently showing at any time.
  */
 import { DerivedProperty, PatternStringProperty } from "scenerystack/axon";
