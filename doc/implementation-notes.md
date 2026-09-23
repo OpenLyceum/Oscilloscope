@@ -2,7 +2,7 @@
 
 Developer-facing notes on how this simulation is put together and why. The educator-facing companion
 is [model.md](./model.md). Sim-specific conventions and pitfalls for AI assistants live in
-[`CLAUDE.md`](../CLAUDE.md).
+[`AGENTS.md`](../AGENTS.md).
 
 ## Architecture Overview
 
