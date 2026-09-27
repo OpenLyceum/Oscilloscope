@@ -1,8 +1,6 @@
 # Multi-Screen Simulations
 
-This template ships as a **single-screen** simulation. Many physics simulations
-expose multiple conceptual modes — "Intro" + "Lab", "Basics" + "Advanced", etc.
-This guide shows how to extend the template to two or more screens.
+Oscilloscope is a single screen in `src/oscilloscope-screen/`. To add screens, follow the current fleet guide in [SceneryStackTemplate `doc/multi-screen.md`](https://github.com/OpenLyceum/SceneryStackTemplate/blob/main/doc/multi-screen.md), or mirror `src/oscilloscope-screen/` by hand. `npm run scaffold-screens` lives in that template.
 
 ---
 
