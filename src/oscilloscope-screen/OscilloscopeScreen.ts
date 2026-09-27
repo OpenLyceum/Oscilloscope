@@ -8,7 +8,7 @@
  * For multi-screen simulations, duplicate this file (e.g. IntroScreen.ts,
  * LabScreen.ts), add each screen to the screens array in src/main.ts, and put
  * shared create*Icon() factories in src/common/{SimName}ScreenIcons.ts (see
- * doc/multi-screen.md).
+ * SceneryStackTemplate doc/multi-screen.md).
  */
 import type { TProperty, TReadOnlyProperty } from "scenerystack/axon";
 import { optionize } from "scenerystack/phet-core";

@@ -22,7 +22,7 @@ rotary knobs, detented rotary switches, and panel buttons, never sliders.** The 
 is deliberately the exception: it is a *separate bench instrument* sitting under the CRT, patched in
 over cables, and it uses sliders and a combo box so it reads as a different box rather than more
 scope panel. Forked from `OpenLyceum/SceneryStackTemplate`, it keeps that template's **canonical
-accessibility** wiring. For multi-screen sims, see [`doc/multi-screen.md`](doc/multi-screen.md).
+accessibility** wiring. For multi-screen sims, see [SceneryStackTemplate `doc/multi-screen.md`](https://github.com/OpenLyceum/SceneryStackTemplate/blob/main/doc/multi-screen.md).
 
 ### Simulation architecture
 
@@ -326,7 +326,7 @@ npm run lint && npm run check && npm run build && npm test
 
 ## Multi-screen sims
 
-Full guide: [`doc/multi-screen.md`](doc/multi-screen.md)
+Full guide: [SceneryStackTemplate `doc/multi-screen.md`](https://github.com/OpenLyceum/SceneryStackTemplate/blob/main/doc/multi-screen.md)
 
 Summary:
 - Create a new screen folder mirroring `src/oscilloscope-screen/` for each screen

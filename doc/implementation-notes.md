@@ -161,7 +161,7 @@ no `getUserMedia`, so the audio source yields a flat line, which the tests asser
 
 ## Multi-screen simulations
 
-Single-screen today. To add screens see [`multi-screen.md`](./multi-screen.md): per-screen folders
+Single-screen today. To add screens see [SceneryStackTemplate `doc/multi-screen.md`](https://github.com/OpenLyceum/SceneryStackTemplate/blob/main/doc/multi-screen.md): per-screen folders
 mirroring `src/oscilloscope-screen/`, `StringManager` screen-name getters, an optional shared root
 model, a `src/common/OscilloscopeScreenIcons.ts` module wired as `homeScreenIcon` /
 `navigationBarIcon`, and every screen registered in `main.ts`.
