@@ -25,7 +25,7 @@ main.ts
             └─ OscilloscopeKeyboardHelpContent
 
 src/common/controls/    RotaryKnob, RotarySwitch, PanelButton, KnobDragListener
-src/common/             SimPanel, SimButtonOptions, TimeModel, downloadFile
+src/common/             OscilloscopePanel, OscilloscopeButtonOptions, TimeModel, downloadFile
 src/preferences/        PreferencesModel / PreferencesNode / queryParameters
 ```
 

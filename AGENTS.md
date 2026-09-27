@@ -162,22 +162,22 @@ that constraint directly so the override does not come back.
 | `src/oscilloscope-screen/view/formatUnits.ts` | Engineering-unit label formatters (mV/V, µs/ms, Hz/kHz, %, °) |
 | `src/oscilloscope-screen/view/OscilloscopeScreenSummaryContent.ts` | Accessible screen summary with **live** current-details |
 | `src/oscilloscope-screen/view/OscilloscopeKeyboardHelpContent.ts` | Keyboard-help dialog content (slider + basic actions) |
-| `src/common/SimPanel.ts` | Pre-themed `Panel` wrapper (uses `OscilloscopeColors` automatically) |
-| `src/common/SimButtonOptions.ts` | Flat button-appearance option bundles + light-control-surface combo-box options |
+| `src/common/OscilloscopePanel.ts` | Pre-themed `Panel` wrapper (uses `OscilloscopeColors` automatically) |
+| `src/common/OscilloscopeButtonOptions.ts` | Flat button-appearance option bundles + light-control-surface combo-box options |
 | `src/common/TimeModel.ts` | Composable play/pause model — drives Run/Stop |
 | `scripts/generate-icons.ts` | PNG icons from `public/icons/icon.svg` |
 
 ## Common components
 
-### SimPanel
+### OscilloscopePanel
 
-Every control panel and info box in the sim should use `SimPanel` so that
+Every control panel and info box in the sim should use `OscilloscopePanel` so that
 default/projector color switching is automatic:
 
 ```typescript
-import { SimPanel } from "../../common/SimPanel.js";
-const panel = new SimPanel(content);              // uses OscilloscopeColors defaults
-const panel = new SimPanel(content, { xMargin: 20 }); // override any PanelOption
+import { OscilloscopePanel } from "../../common/OscilloscopePanel.js";
+const panel = new OscilloscopePanel(content);              // uses OscilloscopeColors defaults
+const panel = new OscilloscopePanel(content, { xMargin: 20 }); // override any PanelOption
 ```
 
 ### TimeModel
@@ -201,13 +201,13 @@ export class MyModel implements TModel {
 Wire the view to `TimeControlNode` from `scenerystack/scenery-phet` binding on
 `model.timer.isPlayingProperty`.
 
-### SimButtonOptions
+### OscilloscopeButtonOptions
 
 SceneryStack's push/round buttons default to a 3-D/beveled look; every button in the sim
 should be flat instead. Spread these into the relevant options object:
 
 ```typescript
-import { FLAT_RESET_ALL_BUTTON_OPTIONS, FLAT_RECTANGULAR_BUTTON_OPTIONS } from "../../common/SimButtonOptions.js";
+import { FLAT_RESET_ALL_BUTTON_OPTIONS, FLAT_RECTANGULAR_BUTTON_OPTIONS } from "../../common/OscilloscopeButtonOptions.js";
 
 const resetAllButton = new ResetAllButton({ ...FLAT_RESET_ALL_BUTTON_OPTIONS, listener: () => {...} });
 const exampleButton = new RectangularPushButton({ ...FLAT_RECTANGULAR_BUTTON_OPTIONS, content, listener });
@@ -215,7 +215,7 @@ const exampleButton = new RectangularPushButton({ ...FLAT_RECTANGULAR_BUTTON_OPT
 
 `FLAT_PLAY_PAUSE_STEP_BUTTON_OPTIONS` spreads into `TimeControlNode`'s `playPauseStepButtonOptions`;
 `TIME_CONTROL_SPEED_RADIO_OPTIONS` fixes `TimeControlNode`'s speed-radio label color, which
-otherwise defaults to black text on the sim's dark default-mode panels. `SIM_COMBO_BOX_OPTIONS`
+otherwise defaults to black text on the sim's dark default-mode panels. `OSCILLOSCOPE_COMBO_BOX_OPTIONS`
 themes a `ComboBox`'s button/list chrome to the light control surface below; pair item labels
 with `LIGHT_SURFACE_TEXT_FILL` (not `OscilloscopeColors.textColorProperty`, which is for panel-fill text).
 

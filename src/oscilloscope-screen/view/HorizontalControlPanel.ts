@@ -11,7 +11,7 @@ import { PanelButton } from "../../common/controls/PanelButton.js";
 import { RotaryKnob } from "../../common/controls/RotaryKnob.js";
 import { RotarySwitch } from "../../common/controls/RotarySwitch.js";
 import { DisposalBag } from "../../common/DisposalBag.js";
-import { SimPanel } from "../../common/SimPanel.js";
+import { OscilloscopePanel } from "../../common/OscilloscopePanel.js";
 import { StringManager } from "../../i18n/StringManager.js";
 import {
   SCOPE_DELAY_RANGE,
@@ -24,7 +24,7 @@ import { derivedString, numberItems, unionItems } from "./controlHelpers.js";
 import { formatDivisions, formatTimePerDiv } from "./formatUnits.js";
 import { withSectionHeader } from "./panelSection.js";
 
-export class HorizontalControlPanel extends SimPanel {
+export class HorizontalControlPanel extends OscilloscopePanel {
   public readonly controlsInOrder: Node[];
 
   private readonly bag: DisposalBag;

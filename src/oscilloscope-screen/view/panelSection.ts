@@ -5,7 +5,7 @@
  * a full-width label strip above the panel body, spanning the body's width, like
  * the "Vertical | Horizontal | Trigger" band across a real scope's front panel.
  *
- * Returns a Node to hand straight to a {@link SimPanel} as its content.
+ * Returns a Node to hand straight to a {@link OscilloscopePanel} as its content.
  */
 
 import type { TReadOnlyProperty } from "scenerystack/axon";
@@ -38,7 +38,7 @@ export type SectionHeaderOptions = {
 
 /**
  * Wraps a panel body with a section-header strip sized to span the body width, and
- * returns a VBox suitable as a {@link SimPanel} content node. The strip re-measures
+ * returns a VBox suitable as a {@link OscilloscopePanel} content node. The strip re-measures
  * when the body or label bounds change (e.g. on locale switch).
  */
 export function withSectionHeader(

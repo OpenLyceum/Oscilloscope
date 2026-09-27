@@ -13,7 +13,7 @@ import { PanelButton } from "../../common/controls/PanelButton.js";
 import { RotaryKnob } from "../../common/controls/RotaryKnob.js";
 import { RotarySwitch } from "../../common/controls/RotarySwitch.js";
 import { DisposalBag } from "../../common/DisposalBag.js";
-import { SimPanel } from "../../common/SimPanel.js";
+import { OscilloscopePanel } from "../../common/OscilloscopePanel.js";
 import { StringManager } from "../../i18n/StringManager.js";
 import OscilloscopeColors from "../../OscilloscopeColors.js";
 import { SCOPE_POSITION_RANGE, SCOPE_PROBE_FACTORS, SCOPE_VOLTS_PER_DIV_STEPS } from "../../OscilloscopeConstants.js";
@@ -42,7 +42,7 @@ export type VerticalControlPanelOptions = {
   ch2Bnc: Node;
 };
 
-export class VerticalControlPanel extends SimPanel {
+export class VerticalControlPanel extends OscilloscopePanel {
   public readonly controlsInOrder: Node[] = [];
 
   private readonly bag: DisposalBag;

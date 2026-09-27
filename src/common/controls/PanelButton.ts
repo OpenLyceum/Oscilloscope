@@ -16,7 +16,7 @@ import { Circle, HBox, Node, Text, type TPaint } from "scenerystack/scenery";
 import { PhetFont } from "scenerystack/scenery-phet";
 import { RectangularPushButton, type RectangularPushButtonOptions } from "scenerystack/sun";
 import OscilloscopeColors from "../../OscilloscopeColors.js";
-import { FLAT_BUTTON_APPEARANCE_OPTIONS } from "../SimButtonOptions.js";
+import { FLAT_BUTTON_APPEARANCE_OPTIONS } from "../OscilloscopeButtonOptions.js";
 
 type SelfOptions = {
   /** Button label. */

@@ -18,8 +18,8 @@ import { HBox, Node, Text, VBox } from "scenerystack/scenery";
 import { PhetFont } from "scenerystack/scenery-phet";
 import { ComboBox, type ComboBoxItem, HSlider, type HSliderOptions } from "scenerystack/sun";
 import { DisposalBag } from "../../common/DisposalBag.js";
-import { LIGHT_SURFACE_TEXT_FILL, SIM_COMBO_BOX_OPTIONS } from "../../common/SimButtonOptions.js";
-import { SimPanel } from "../../common/SimPanel.js";
+import { LIGHT_SURFACE_TEXT_FILL, OSCILLOSCOPE_COMBO_BOX_OPTIONS } from "../../common/OscilloscopeButtonOptions.js";
+import { OscilloscopePanel } from "../../common/OscilloscopePanel.js";
 import { StringManager } from "../../i18n/StringManager.js";
 import OscilloscopeColors from "../../OscilloscopeColors.js";
 import {
@@ -180,7 +180,7 @@ export type SignalGeneratorPanelOptions = {
   sourceJackMic: Node;
 };
 
-export class SignalGeneratorPanel extends SimPanel {
+export class SignalGeneratorPanel extends OscilloscopePanel {
   public readonly waveformComboBox: Node;
   public readonly frequencySlider: Node;
   public readonly amplitudeSlider: Node;
@@ -210,7 +210,7 @@ export class SignalGeneratorPanel extends SimPanel {
       }),
       options.listParent,
       {
-        ...SIM_COMBO_BOX_OPTIONS,
+        ...OSCILLOSCOPE_COMBO_BOX_OPTIONS,
         accessibleName: controls.waveformStringProperty,
         comboBoxVoicingNameResponsePattern: "{{value}}",
       },

@@ -9,7 +9,7 @@ import { Text, VBox } from "scenerystack/scenery";
 import { PhetFont } from "scenerystack/scenery-phet";
 import { Dialog } from "scenerystack/sim";
 import { RectangularPushButton } from "scenerystack/sun";
-import { FLAT_RECTANGULAR_BUTTON_OPTIONS } from "../../common/SimButtonOptions.js";
+import { FLAT_RECTANGULAR_BUTTON_OPTIONS } from "../../common/OscilloscopeButtonOptions.js";
 import { StringManager } from "../../i18n/StringManager.js";
 import OscilloscopeColors from "../../OscilloscopeColors.js";
 import type { OscilloscopeModel } from "../model/OscilloscopeModel.js";

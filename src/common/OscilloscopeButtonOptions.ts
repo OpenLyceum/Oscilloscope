@@ -1,5 +1,5 @@
 /**
- * SimButtonOptions.ts
+ * OscilloscopeButtonOptions.ts
  *
  * Shared flat button appearance for the sim. Rectangular and round push buttons
  * default to SceneryStack's 3-D appearance; pass these options (or spread them
@@ -21,7 +21,7 @@ export const LIGHT_SURFACE_TEXT_FILL = OscilloscopeColors.controlSurfaceTextColo
  * Combo-box chrome for panels. Item labels must use {@link LIGHT_SURFACE_TEXT_FILL}, not
  * {@link OscilloscopeColors.textColorProperty} — that color is for labels on the dark panel fill.
  */
-export const SIM_COMBO_BOX_OPTIONS = {
+export const OSCILLOSCOPE_COMBO_BOX_OPTIONS = {
   buttonFill: OscilloscopeColors.controlSurfaceColorProperty,
   listFill: OscilloscopeColors.controlSurfaceColorProperty,
   buttonStroke: OscilloscopeColors.panelBorderColorProperty,

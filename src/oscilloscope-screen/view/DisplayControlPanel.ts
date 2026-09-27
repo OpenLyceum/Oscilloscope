@@ -13,7 +13,7 @@ import { HBox, type Node, VBox } from "scenerystack/scenery";
 import { PanelButton } from "../../common/controls/PanelButton.js";
 import { RotaryKnob } from "../../common/controls/RotaryKnob.js";
 import { DisposalBag } from "../../common/DisposalBag.js";
-import { SimPanel } from "../../common/SimPanel.js";
+import { OscilloscopePanel } from "../../common/OscilloscopePanel.js";
 import { StringManager } from "../../i18n/StringManager.js";
 import { SCOPE_FOCUS_RANGE, SCOPE_INTENSITY_RANGE } from "../../OscilloscopeConstants.js";
 import type { OscilloscopeModel } from "../model/OscilloscopeModel.js";
@@ -21,7 +21,7 @@ import { derivedString } from "./controlHelpers.js";
 import { formatPercent } from "./formatUnits.js";
 import { withSectionHeader } from "./panelSection.js";
 
-export class DisplayControlPanel extends SimPanel {
+export class DisplayControlPanel extends OscilloscopePanel {
   public readonly controlsInOrder: Node[];
 
   private readonly bag: DisposalBag;

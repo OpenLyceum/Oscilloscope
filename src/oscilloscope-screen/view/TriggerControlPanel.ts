@@ -12,7 +12,7 @@ import { PanelButton } from "../../common/controls/PanelButton.js";
 import { RotaryKnob } from "../../common/controls/RotaryKnob.js";
 import { RotarySwitch } from "../../common/controls/RotarySwitch.js";
 import { DisposalBag } from "../../common/DisposalBag.js";
-import { SimPanel } from "../../common/SimPanel.js";
+import { OscilloscopePanel } from "../../common/OscilloscopePanel.js";
 import { StringManager } from "../../i18n/StringManager.js";
 import { SCOPE_TRIGGER_HOLDOFF_RANGE, SCOPE_TRIGGER_LEVEL_RANGE } from "../../OscilloscopeConstants.js";
 import type { OscilloscopeModel } from "../model/OscilloscopeModel.js";
@@ -21,7 +21,7 @@ import { derivedString, unionItems } from "./controlHelpers.js";
 import { formatHoldoff, formatVoltage } from "./formatUnits.js";
 import { withSectionHeader } from "./panelSection.js";
 
-export class TriggerControlPanel extends SimPanel {
+export class TriggerControlPanel extends OscilloscopePanel {
   public readonly controlsInOrder: Node[];
 
   private readonly bag: DisposalBag;

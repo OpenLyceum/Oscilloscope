@@ -16,7 +16,7 @@ import { Text, VBox } from "scenerystack/scenery";
 import { NumberControl, PhetFont } from "scenerystack/scenery-phet";
 import { Checkbox } from "scenerystack/sun";
 import type { Tandem } from "scenerystack/tandem";
-import { LIGHT_SURFACE_TEXT_FILL } from "../common/SimButtonOptions.js";
+import { LIGHT_SURFACE_TEXT_FILL } from "../common/OscilloscopeButtonOptions.js";
 import { StringManager } from "../i18n/StringManager.js";
 import OscilloscopeColors from "../OscilloscopeColors.js";
 import { FG_NOISE_AMPLITUDE_RANGE } from "../OscilloscopeConstants.js";

@@ -11,7 +11,7 @@ import type { TProperty } from "scenerystack/axon";
 import { HBox, type Node, VBox } from "scenerystack/scenery";
 import { PanelButton } from "../../common/controls/PanelButton.js";
 import { DisposalBag } from "../../common/DisposalBag.js";
-import { SimPanel } from "../../common/SimPanel.js";
+import { OscilloscopePanel } from "../../common/OscilloscopePanel.js";
 import { StringManager } from "../../i18n/StringManager.js";
 import OscilloscopeColors from "../../OscilloscopeColors.js";
 import type { OscilloscopeModel } from "../model/OscilloscopeModel.js";
@@ -26,7 +26,7 @@ export type SoftAcquirePanelOptions = {
   onExportImage: () => void;
 };
 
-export class SoftAcquirePanel extends SimPanel {
+export class SoftAcquirePanel extends OscilloscopePanel {
   public readonly controlsInOrder: Node[];
 
   private readonly bag: DisposalBag;

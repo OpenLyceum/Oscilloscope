@@ -19,7 +19,7 @@ import { ResetAllButton } from "scenerystack/scenery-phet";
 import type { ScreenViewOptions } from "scenerystack/sim";
 import { ScreenView } from "scenerystack/sim";
 import { downloadTextFile, triggerBlobDownload } from "../../common/downloadFile.js";
-import { FLAT_RESET_ALL_BUTTON_OPTIONS } from "../../common/SimButtonOptions.js";
+import { FLAT_RESET_ALL_BUTTON_OPTIONS } from "../../common/OscilloscopeButtonOptions.js";
 import OscilloscopeColors from "../../OscilloscopeColors.js";
 import {
   HORIZONTAL_DIVISIONS,
