@@ -167,7 +167,7 @@ that constraint directly so the override does not come back.
 | `src/common/TimeModel.ts` | Composable play/pause model — drives Run/Stop |
 | `scripts/generate-icons.ts` | PNG icons from `public/icons/icon.svg` |
 
-## Common components
+### Common components
 
 ### OscilloscopePanel
 
@@ -224,6 +224,20 @@ with `LIGHT_SURFACE_TEXT_FILL` (not `OscilloscopeColors.textColorProperty`, whic
 `controlSurfaceTextColorProperty` — identical white/dark-text values in both default and
 projector profiles, so any component that must stay light regardless of theme (combo boxes,
 flat buttons, editable fields) keeps readable contrast automatically.
+
+## Model
+
+### Multi-screen sims
+
+Full guide: [SceneryStackTemplate `doc/multi-screen.md`](https://github.com/OpenLyceum/SceneryStackTemplate/blob/main/doc/multi-screen.md)
+
+Summary:
+- Create a new screen folder mirroring `src/oscilloscope-screen/` for each screen
+- Add screen-name keys to all locale JSON files
+- Expose new `StringProperty` getters in `StringManager.getScreenNames()`
+- For shared state, create a root model passed to each per-screen model
+- Add `src/common/{SimName}ScreenIcons.ts` with `create{Screen}Icon()` factories; wire `homeScreenIcon` + `navigationBarIcon` on each Screen
+- Register all screens in the `screens` array in `main.ts`
 
 ## Accessibility
 
@@ -324,18 +338,8 @@ npm run lint && npm run check && npm run build && npm test
 | `npm run test:fuzz:quick` | 10s fuzz |
 | `npm run icons` | Regenerate PWA icons |
 
-## Multi-screen sims
+## Development notes
 
-Full guide: [SceneryStackTemplate `doc/multi-screen.md`](https://github.com/OpenLyceum/SceneryStackTemplate/blob/main/doc/multi-screen.md)
-
-Summary:
-- Create a new screen folder mirroring `src/oscilloscope-screen/` for each screen
-- Add screen-name keys to all locale JSON files
-- Expose new `StringProperty` getters in `StringManager.getScreenNames()`
-- For shared state, create a root model passed to each per-screen model
-- Add `src/common/{SimName}ScreenIcons.ts` with `create{Screen}Icon()` factories; wire `homeScreenIcon` + `navigationBarIcon` on each Screen
-- Register all screens in the `screens` array in `main.ts`
-
-## PWA
+### PWA
 
 After `npm run build`, the sim is installable offline via Workbox (`dist/manifest.webmanifest`).
