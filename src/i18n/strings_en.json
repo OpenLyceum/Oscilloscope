@@ -16,7 +16,8 @@
     "amplitude": "Amplitude",
     "offset": "Offset",
     "duty": "Duty",
-    "phase": "OUT B Phase"
+    "phase": "OUT B Phase",
+    "modelName": "OpenLyceum · FG-100"
   },
   "source": {
     "title": "Microphone",

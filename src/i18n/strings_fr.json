@@ -16,7 +16,8 @@
     "amplitude": "Amplitude",
     "offset": "Décalage",
     "duty": "Rapport",
-    "phase": "Phase SORT B"
+    "phase": "Phase SORT B",
+    "modelName": "OpenLyceum · FG-100"
   },
   "source": {
     "title": "Microphone",

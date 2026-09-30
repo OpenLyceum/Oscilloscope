@@ -8,6 +8,8 @@
  * generator multiplies it by its amplitude (in volts) to produce a voltage.
  */
 
+import { dotRandom } from "scenerystack/dot";
+
 /** All function-generator waveform shapes, in display order. */
 export const WAVEFORMS = ["sine", "square", "triangle", "sawtooth", "pulse", "noise"] as const;
 
@@ -26,7 +28,10 @@ export function waveformSample(waveform: Waveform, phase: number, duty = 0.5): n
   // Noise is aperiodic — a fresh pseudo-random sample every call.
   if (waveform === "noise") {
     // Sum of uniforms → roughly bell-shaped, scaled back into [-1, 1].
-    return Math.max(-1, Math.min(1, (Math.random() + Math.random() + Math.random() - 1.5) / 1.5));
+    return Math.max(
+      -1,
+      Math.min(1, (dotRandom.nextDouble() + dotRandom.nextDouble() + dotRandom.nextDouble() - 1.5) / 1.5),
+    );
   }
 
   // Wrap into the [0, 1) fundamental period.

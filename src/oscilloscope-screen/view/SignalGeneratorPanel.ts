@@ -332,7 +332,7 @@ export class SignalGeneratorPanel extends OscilloscopePanel {
     bag.own(statusText, statusVisibleProperty, statusTextProperty);
 
     // Silkscreen model label, so the box reads as a distinct bench instrument.
-    const modelLabel = new Text("OpenLyceum · FG-100", {
+    const modelLabel = new Text(g.modelNameStringProperty, {
       font: new PhetFont({ size: 10, weight: "bold" }),
       fill: OscilloscopeColors.generatorAccentColorProperty,
       opacity: 0.75,

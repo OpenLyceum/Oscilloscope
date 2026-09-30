@@ -12,7 +12,7 @@
 
 import { Shape } from "scenerystack/kite";
 import { type EmptySelfOptions, optionize } from "scenerystack/phet-core";
-import { DragListener, Node, type NodeOptions, Path, Rectangle } from "scenerystack/scenery";
+import { DragListener, KeyboardDragListener, Node, type NodeOptions, Path, Rectangle } from "scenerystack/scenery";
 import { StringManager } from "../../i18n/StringManager.js";
 import OscilloscopeColors from "../../OscilloscopeColors.js";
 import {
@@ -77,7 +77,8 @@ export class OscilloscopeDisplayNode extends Node {
   private readonly xyPath: Path;
   private readonly fftPath: Path;
   private readonly ghostPaths: Path[];
-  private readonly triggerMarker: Node;
+  /** Focusable trigger-level line, for the screen's pdomOrder. */
+  public readonly triggerMarker: Node;
   private readonly triggerLine: Path;
   private readonly cursorLayer: Node;
   /** Brightened band marking the delayed-sweep window on the main trace. */
@@ -257,17 +258,40 @@ export class OscilloscopeDisplayNode extends Node {
         fill: OscilloscopeColors.triggerColorProperty,
       },
     );
-    this.triggerMarker = new Node({ children: [this.triggerLine, triggerTab], cursor: "ns-resize" });
+    this.triggerMarker = new Node({
+      children: [this.triggerLine, triggerTab],
+      cursor: "ns-resize",
+      tagName: "div",
+      focusable: true,
+      accessibleName: StringManager.getInstance().getA11yStrings().controls.triggerLevelStringProperty,
+    });
     const triggerDragListener = new DragListener({
       drag: (event) => {
         const localY = this.globalToLocalPoint(event.pointer.point).y;
         this.setTriggerLevelFromY(localY);
       },
     });
+    // Up raises the level, matching the trace. dragDelta is one abstract step of
+    // 0.1 V (the level knob's keyboard step); shift is a tenth of that. The knob
+    // is a separate AccessibleSlider, so its arrows fire only while it is focused.
+    const triggerKeyboardDragListener = new KeyboardDragListener({
+      keyboardDragDirection: "upDown",
+      dragDelta: 1,
+      shiftDragDelta: 0.1,
+      drag: (_event, listener) => {
+        const deltaVolts = -listener.modelDelta.y * 0.1;
+        this.model.trigger.levelProperty.value = SCOPE_TRIGGER_LEVEL_RANGE.constrainValue(
+          this.model.trigger.levelProperty.value + deltaVolts,
+        );
+      },
+    });
     this.triggerMarker.addInputListener(triggerDragListener);
+    this.triggerMarker.addInputListener(triggerKeyboardDragListener);
     this.disposeActions.push(() => {
       this.triggerMarker.removeInputListener(triggerDragListener);
+      this.triggerMarker.removeInputListener(triggerKeyboardDragListener);
       triggerDragListener.dispose();
+      triggerKeyboardDragListener.dispose();
     });
     this.addChild(this.triggerMarker);
     this.ownedChildren.push(this.triggerMarker, this.triggerLine, triggerTab);
@@ -423,7 +447,7 @@ export class OscilloscopeDisplayNode extends Node {
     this.fftPath.shape = null;
     // The trigger marker sits on a channel's displayed trace; LINE and EXT trigger
     // on their own reference signals, which are not drawn, so there is nothing to
-    // mark. The TriggerControlPanel's level knob remains the keyboard equivalent.
+    // mark. The level knob is a second control for the same voltage.
     const source = model.trigger.sourceProperty.value;
     this.triggerMarker.visible = source === "ch1" || source === "ch2";
     this.cursorLayer.visible = model.cursorsEnabledProperty.value;

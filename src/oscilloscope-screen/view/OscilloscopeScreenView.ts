@@ -303,6 +303,7 @@ export class OscilloscopeScreenView extends ScreenView {
           generatorPanel.offsetSlider,
           generatorPanel.dutySlider,
           generatorPanel.phaseSlider,
+          displayNode.triggerMarker,
           ...displayNode.cursorsInOrder,
           resetAllButton,
         ],

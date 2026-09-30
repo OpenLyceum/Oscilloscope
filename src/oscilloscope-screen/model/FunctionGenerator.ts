@@ -13,6 +13,7 @@
  */
 
 import { BooleanProperty, NumberProperty, StringUnionProperty, type TReadOnlyProperty } from "scenerystack/axon";
+import { dotRandom } from "scenerystack/dot";
 import {
   FG_AMPLITUDE_RANGE,
   FG_DEFAULT_AMPLITUDE,
@@ -139,7 +140,7 @@ export class FunctionGenerator {
       return 0;
     }
     // Uniform additive noise, independent per sample.
-    return (Math.random() * 2 - 1) * this.noiseAmplitudeProperty.value;
+    return dotRandom.nextDoubleBetween(-1, 1) * this.noiseAmplitudeProperty.value;
   }
 
   /**

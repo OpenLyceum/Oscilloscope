@@ -16,7 +16,8 @@
     "amplitude": "Amplitud",
     "offset": "Desplaz.",
     "duty": "Ciclo",
-    "phase": "Fase SAL B"
+    "phase": "Fase SAL B",
+    "modelName": "OpenLyceum · FG-100"
   },
   "source": {
     "title": "Micrófono",
