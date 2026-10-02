@@ -155,3 +155,15 @@ describe("persistence afterglow", () => {
     model.dispose();
   });
 });
+
+describe("layout", () => {
+  it("keeps every visible top-level node inside the layout bounds", () => {
+    // Anything past layoutBounds.maxY lands under the navigation bar.
+    const view = createView(new OscilloscopeModel());
+    for (const child of view.children) {
+      if (child.visible && child.bounds.isFinite()) {
+        expect(view.layoutBounds.containsBounds(child.bounds), child.constructor.name).toBe(true);
+      }
+    }
+  });
+});

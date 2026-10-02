@@ -254,8 +254,9 @@ Sim-specific notes:
   measurement cursors are `MeasurementCursorNode`s built on `AccessibleSlider` (not plain drag
   targets), so Δt / 1÷Δt / ΔV is reachable without a pointer; they sit at the end of `pdomOrder`,
   after the acquisition cluster that reveals them.
-- The trigger-level marker is pointer-only by design — `TriggerControlPanel`'s level knob is its
-  keyboard equivalent and writes the same Property.
+- The trigger-level marker on the CRT is focusable and keyboard-draggable (a `KeyboardDragListener`:
+  up/down in 0.1 V steps, shift for 0.01 V), documented in keyboard help under Move Draggable Items.
+  `TriggerControlPanel`'s level knob writes the same Property.
 - Numbers interpolated into a11y strings must be rounded explicitly.
   `PatternStringProperty`'s `decimalPlaces` defaults to `null` (no rounding), and the knobs are
   continuous, so an unrounded value reads aloud as `1018.1409090909092`. See

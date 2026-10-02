@@ -208,7 +208,7 @@ class VerticalControlPanelColumn extends VBox {
     // Each detent's label follows the probe switch, so the dial reads in the same
     // tip-referenced volts as the trace and the cursors.
     const voltsItems = SCOPE_VOLTS_PER_DIV_STEPS.map((value) => {
-      const stringProperty = new DerivedProperty([channel.probeProperty], (probe) => formatVoltsPerDiv(value * probe));
+      const stringProperty = derivedString(channel.probeProperty, (probe) => formatVoltsPerDiv(value * probe));
       bag.own(stringProperty);
       return { value, stringProperty };
     });
@@ -220,7 +220,7 @@ class VerticalControlPanelColumn extends VBox {
 
     const probeSwitch = new RotarySwitch(
       channel.probeProperty,
-      numberItems(SCOPE_PROBE_FACTORS, (factor) => `×${factor}`),
+      numberItems(SCOPE_PROBE_FACTORS, (factor) => `×${factor}`, bag),
       { radius: 14, captionStringProperty: v.probeStringProperty, accessibleName: a11y.probe },
     );
 

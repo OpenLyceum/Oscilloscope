@@ -141,6 +141,22 @@
     "lissajous90Title": "Match a 90° Lissajous",
     "lissajous90Hint": "X-Y mode with OUT B at 90°. A circle means the phase is right."
   },
+  "units": {
+    "decimalSeparator": ".",
+    "voltsPerDivPattern": "{{value}} V/div",
+    "millivoltsPerDivPattern": "{{value}} mV/div",
+    "millisecondsPerDivPattern": "{{value}} ms/div",
+    "microsecondsPerDivPattern": "{{value}} µs/div",
+    "hertzPattern": "{{value}} Hz",
+    "kilohertzPattern": "{{value}} kHz",
+    "millisecondsPattern": "{{value}} ms",
+    "microsecondsPattern": "{{value}} µs",
+    "nanosecondsPattern": "{{value}} ns",
+    "voltsPattern": "{{value}} V",
+    "percentPattern": "{{value}}%",
+    "degreesPattern": "{{value}}°",
+    "divisionsPattern": "{{value}} div"
+  },
   "a11y": {
     "screenSummary": {
       "playArea": "The play area is an oscilloscope screen with a graticule grid on which one or two glowing waveform traces are drawn, with an adjustable trigger-level line.",

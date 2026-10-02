@@ -141,6 +141,22 @@
     "lissajous90Title": "Obtener un Lissajous a 90°",
     "lissajous90Hint": "Modo X-Y con OUT B a 90°. Un círculo significa que la fase es correcta."
   },
+  "units": {
+    "decimalSeparator": ",",
+    "voltsPerDivPattern": "{{value}} V/div",
+    "millivoltsPerDivPattern": "{{value}} mV/div",
+    "millisecondsPerDivPattern": "{{value}} ms/div",
+    "microsecondsPerDivPattern": "{{value}} µs/div",
+    "hertzPattern": "{{value}} Hz",
+    "kilohertzPattern": "{{value}} kHz",
+    "millisecondsPattern": "{{value}} ms",
+    "microsecondsPattern": "{{value}} µs",
+    "nanosecondsPattern": "{{value}} ns",
+    "voltsPattern": "{{value}} V",
+    "percentPattern": "{{value}} %",
+    "degreesPattern": "{{value}}°",
+    "divisionsPattern": "{{value}} div"
+  },
   "a11y": {
     "screenSummary": {
       "playArea": "El área de juego es una pantalla de osciloscopio con una retícula sobre la que se dibujan una o dos trazas luminosas, con una línea de nivel de disparo ajustable.",

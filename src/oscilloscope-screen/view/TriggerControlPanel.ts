@@ -85,9 +85,10 @@ export class TriggerControlPanel extends OscilloscopePanel {
       { radius: 20, captionStringProperty: t.modeStringProperty, accessibleName: a11y.triggerModeStringProperty },
     );
 
-    const holdoffReadoutProperty = new DerivedProperty(
-      [trigger.holdoffProperty, t.holdoffOffStringProperty],
-      (seconds, offLabel) => formatHoldoff(seconds, offLabel),
+    const holdoffReadoutProperty = derivedString(
+      trigger.holdoffProperty,
+      (seconds) => formatHoldoff(seconds, t.holdoffOffStringProperty.value),
+      [t.holdoffOffStringProperty],
     );
     const holdoffKnob = new RotaryKnob(trigger.holdoffProperty, SCOPE_TRIGGER_HOLDOFF_RANGE, {
       radius: 18,

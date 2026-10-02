@@ -45,7 +45,7 @@ export class HorizontalControlPanel extends OscilloscopePanel {
 
     const timeSwitch = new RotarySwitch(
       model.timePerDivisionProperty,
-      numberItems(SCOPE_TIME_PER_DIV_STEPS, formatTimePerDiv),
+      numberItems(SCOPE_TIME_PER_DIV_STEPS, formatTimePerDiv, bag),
       {
         radius: 22,
         captionStringProperty: h.timePerDivisionStringProperty,
@@ -101,7 +101,7 @@ export class HorizontalControlPanel extends OscilloscopePanel {
 
     const delayedTimeSwitch = new RotarySwitch(
       model.delayedTimePerDivisionProperty,
-      numberItems(SCOPE_TIME_PER_DIV_STEPS, formatTimePerDiv),
+      numberItems(SCOPE_TIME_PER_DIV_STEPS, formatTimePerDiv, bag),
       {
         radius: 18,
         captionStringProperty: h.delayedScaleStringProperty,

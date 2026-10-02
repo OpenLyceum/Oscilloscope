@@ -129,6 +129,11 @@ export class StringManager {
     return stringProperties.measurements;
   }
 
+  /** Unit patterns (`{{value}} Hz`, …) and the locale's decimal separator. */
+  public getUnits() {
+    return stringProperties.units;
+  }
+
   /** Guided lab-activity dialog strings. */
   public getLabs() {
     return stringProperties.labs;

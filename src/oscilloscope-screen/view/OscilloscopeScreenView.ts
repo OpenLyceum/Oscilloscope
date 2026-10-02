@@ -14,16 +14,14 @@ import type { TProperty, TReadOnlyProperty } from "scenerystack/axon";
 import { DerivedProperty, NumberProperty } from "scenerystack/axon";
 import { Bounds2 } from "scenerystack/dot";
 import { optionize } from "scenerystack/phet-core";
-import { Node, Rectangle, VBox } from "scenerystack/scenery";
+import { Node } from "scenerystack/scenery";
 import { ResetAllButton } from "scenerystack/scenery-phet";
 import type { ScreenViewOptions } from "scenerystack/sim";
 import { ScreenView } from "scenerystack/sim";
 import { downloadTextFile, triggerBlobDownload } from "../../common/downloadFile.js";
 import { FLAT_RESET_ALL_BUTTON_OPTIONS } from "../../common/OscilloscopeButtonOptions.js";
-import OscilloscopeColors from "../../OscilloscopeColors.js";
 import {
   HORIZONTAL_DIVISIONS,
-  PANEL_CORNER_RADIUS,
   SCOPE_TIME_PER_DIV_STEPS,
   SCOPE_TRIGGER_LEVEL_RANGE,
   SCOPE_VOLTS_PER_DIV_STEPS,
@@ -217,29 +215,9 @@ export class OscilloscopeScreenView extends ScreenView {
       sourceJackMic: patchLayer.sourceJackMic,
     });
 
-    // Decorative bezel softkeys flanking the CRT, like a real scope's menu column.
-    // Purely chrome: non-interactive and absent from the PDOM.
-    const softkeys = new VBox({
-      spacing: 12,
-      pickable: false,
-      children: Array.from(
-        { length: 5 },
-        () =>
-          new Rectangle(0, 0, 22, 30, {
-            fill: OscilloscopeColors.softkeyColorProperty,
-            stroke: OscilloscopeColors.knobRimColorProperty,
-            lineWidth: 1,
-            cornerRadius: PANEL_CORNER_RADIUS - 2,
-          }),
-      ),
-    });
-    softkeys.left = displayNode.right + 6;
-    softkeys.centerY = displayNode.centerY;
-    this.addChild(softkeys);
-
     // TBS geography to the right of the CRT: soft/acquire on top, then a
     // Vertical | Horizontal | Trigger row beneath it.
-    const controlsLeft = softkeys.right + 12;
+    const controlsLeft = displayNode.right + 18;
     softAcquirePanel.left = controlsLeft;
     softAcquirePanel.top = SCREEN_VIEW_MARGIN;
 
@@ -259,8 +237,11 @@ export class OscilloscopeScreenView extends ScreenView {
     displayPanel.top = controlRowBottom + 10;
 
     // Generator under the CRT on the left; wires reach rightward to the BNCs.
+    // Capped to the space left above the bottom margin, so longer translations shrink
+    // the panel instead of pushing its lower edge under the navigation bar.
+    generatorPanel.maxHeight = this.layoutBounds.maxY - SCREEN_VIEW_MARGIN - (displayNode.bottom + 10);
     generatorPanel.left = SCREEN_VIEW_MARGIN;
-    generatorPanel.top = displayNode.bottom + 16;
+    generatorPanel.top = displayNode.bottom + 10;
 
     this.addChild(softAcquirePanel);
     this.addChild(horizontalPanel);

@@ -242,12 +242,6 @@ const OscilloscopeColors = {
     projector: "#1a1a1a",
   }),
 
-  /** Decorative bezel softkey buttons flanking the display (non-interactive chrome). */
-  softkeyColorProperty: new ProfileColorProperty(OscilloscopeNamespace, "softkey", {
-    default: "#2b303a",
-    projector: "#e2e4e9",
-  }),
-
   // ── Function generator module ────────────────────────────────────────────────
   // Deliberately distinct from the navy scope front-panel chrome so the signal
   // source reads as a separate instrument (sliders / combo boxes, not knobs).

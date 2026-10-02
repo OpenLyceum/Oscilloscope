@@ -22,6 +22,7 @@ import {
   READOUT_Y_PADDING,
 } from "../../OscilloscopeConstants.js";
 import type { DisplayMode } from "../model/OscilloscopeModel.js";
+import { derivedString } from "./controlHelpers.js";
 import { formatFrequency, formatPeriod, formatVoltage } from "./formatUnits.js";
 
 const READOUT_FONT = new PhetFont(READOUT_FONT_SIZE);
@@ -49,21 +50,31 @@ export class CursorReadoutNode extends Rectangle {
       return node;
     };
 
-    const dtString = new DerivedProperty([measurements.deltaTimeProperty, m.noneStringProperty], (s, dash) =>
-      s > 0 ? formatPeriod(s) : dash,
+    const dtString = derivedString(
+      measurements.deltaTimeProperty,
+      (s) => (s > 0 ? formatPeriod(s) : m.noneStringProperty.value),
+      [m.noneStringProperty],
     );
-    const freqString = new DerivedProperty([measurements.cursorFrequencyProperty, m.noneStringProperty], (hz, dash) =>
-      hz > 0 ? formatFrequency(hz) : dash,
+    const freqString = derivedString(
+      measurements.cursorFrequencyProperty,
+      (hz) => (hz > 0 ? formatFrequency(hz) : m.noneStringProperty.value),
+      [m.noneStringProperty],
     );
-    const dvString = new DerivedProperty([measurements.deltaVoltageProperty], formatVoltage);
-    const f1String = new DerivedProperty([measurements.frequency1Property, m.noneStringProperty], (hz, dash) =>
-      hz > 0 ? formatFrequency(hz) : dash,
+    const dvString = derivedString(measurements.deltaVoltageProperty, formatVoltage);
+    const f1String = derivedString(
+      measurements.frequency1Property,
+      (hz) => (hz > 0 ? formatFrequency(hz) : m.noneStringProperty.value),
+      [m.noneStringProperty],
     );
-    const f2String = new DerivedProperty([measurements.frequency2Property, m.noneStringProperty], (hz, dash) =>
-      hz > 0 ? formatFrequency(hz) : dash,
+    const f2String = derivedString(
+      measurements.frequency2Property,
+      (hz) => (hz > 0 ? formatFrequency(hz) : m.noneStringProperty.value),
+      [m.noneStringProperty],
     );
-    const dfString = new DerivedProperty([measurements.deltaFrequencyProperty, m.noneStringProperty], (hz, dash) =>
-      hz > 0 ? formatFrequency(hz) : dash,
+    const dfString = derivedString(
+      measurements.deltaFrequencyProperty,
+      (hz) => (hz > 0 ? formatFrequency(hz) : m.noneStringProperty.value),
+      [m.noneStringProperty],
     );
 
     const ytGrid = new GridBox({

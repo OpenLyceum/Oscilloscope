@@ -6,17 +6,23 @@
  * short, formatted string Properties that the knobs display as live readouts.
  */
 
-import { DerivedProperty, Property, type TReadOnlyProperty } from "scenerystack/axon";
+import { DerivedProperty, type TReadOnlyProperty } from "scenerystack/axon";
 import type { RotarySwitchItem } from "../../common/controls/RotarySwitch.js";
-
-/** A constant (non-localized) string as a read-only Property, e.g. a unit label. */
-export function constantString(value: string): TReadOnlyProperty<string> {
-  return new Property(value);
-}
+import type { DisposalBag } from "../../common/DisposalBag.js";
+import { UNIT_STRING_PROPERTIES } from "./formatUnits.js";
 
 /** Switch positions for a numeric table (volts/div, time/div), formatted to labels. */
-export function numberItems(values: readonly number[], format: (value: number) => string): RotarySwitchItem<number>[] {
-  return values.map((value) => ({ value, stringProperty: constantString(format(value)) }));
+export function numberItems(
+  values: readonly number[],
+  format: (value: number) => string,
+  bag: DisposalBag,
+): RotarySwitchItem<number>[] {
+  return values.map((value) => {
+    // Re-formatted on a locale change, so the unit pattern and decimal separator follow it.
+    const stringProperty = DerivedProperty.deriveAny([...UNIT_STRING_PROPERTIES], () => format(value));
+    bag.own(stringProperty);
+    return { value, stringProperty };
+  });
 }
 
 /** Switch positions for a string-union table, using localized label Properties. */
@@ -27,10 +33,17 @@ export function unionItems<T extends string>(
   return values.map((value) => ({ value, stringProperty: labels[value] }));
 }
 
-/** A live, formatted readout string derived from a numeric model Property. */
+/**
+ * A live, formatted readout string derived from a numeric model Property. The unit
+ * strings are dependencies too, so the readout follows a locale change; pass any other
+ * string `format` reads (e.g. the "no measurement" dash) as `extraDependencies`.
+ */
 export function derivedString<T>(
   property: TReadOnlyProperty<T>,
   format: (value: T) => string,
+  extraDependencies: readonly TReadOnlyProperty<unknown>[] = [],
 ): TReadOnlyProperty<string> {
-  return new DerivedProperty([property], format);
+  return DerivedProperty.deriveAny([property, ...extraDependencies, ...UNIT_STRING_PROPERTIES], () =>
+    format(property.value),
+  );
 }

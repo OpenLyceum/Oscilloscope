@@ -355,12 +355,20 @@ export class SignalGeneratorPanel extends OscilloscopePanel {
         frequencySlider,
         new HBox({ spacing: 18, align: "top", children: [amplitudeSlider, offsetSlider] }),
         new HBox({ spacing: 18, align: "top", children: [dutySlider, phaseSlider] }),
+        // The model badge rides beside the jacks rather than on its own row, so the
+        // generator fits in the space under the CRT.
         new HBox({
           spacing: 20,
-          align: "top",
-          children: [options.sourceJackA, options.sourceJackB, options.sourceJackMic],
+          align: "bottom",
+          children: [
+            new HBox({
+              spacing: 20,
+              align: "top",
+              children: [options.sourceJackA, options.sourceJackB, options.sourceJackMic],
+            }),
+            modelLabel,
+          ],
         }),
-        modelLabel,
       ],
     });
 

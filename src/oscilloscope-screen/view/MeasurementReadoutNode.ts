@@ -10,7 +10,7 @@
  * measurements" toggle.
  */
 
-import { DerivedProperty, type TReadOnlyProperty } from "scenerystack/axon";
+import type { TReadOnlyProperty } from "scenerystack/axon";
 import { GridBox, Rectangle, Text } from "scenerystack/scenery";
 import { PhetFont } from "scenerystack/scenery-phet";
 import { DisposalBag } from "../../common/DisposalBag.js";
@@ -25,6 +25,7 @@ import {
   READOUT_X_PADDING,
   READOUT_Y_PADDING,
 } from "../../OscilloscopeConstants.js";
+import { derivedString } from "./controlHelpers.js";
 import { formatDegrees, formatFrequency, formatPercent, formatPeriod, formatVoltage } from "./formatUnits.js";
 
 const READOUT_FONT = new PhetFont(READOUT_FONT_SIZE);
@@ -67,28 +68,32 @@ export class MeasurementReadoutNode extends Rectangle {
       return text;
     };
 
-    const freqString = new DerivedProperty([measurements.frequencyProperty, none], (hz, dash) =>
-      hz > 0 ? formatFrequency(hz) : dash,
+    const freqString = derivedString(
+      measurements.frequencyProperty,
+      (hz) => (hz > 0 ? formatFrequency(hz) : none.value),
+      [none],
     );
-    const periodString = new DerivedProperty([measurements.periodProperty, none], (s, dash) =>
-      s > 0 ? formatPeriod(s) : dash,
-    );
-    const vppString = new DerivedProperty([measurements.vppProperty], formatVoltage);
-    const vrmsString = new DerivedProperty([measurements.vrmsProperty], formatVoltage);
-    const vmaxString = new DerivedProperty([measurements.vmaxProperty], formatVoltage);
-    const vminString = new DerivedProperty([measurements.vminProperty], formatVoltage);
-    const dutyString = new DerivedProperty([measurements.dutyCycleProperty, none], (d, dash) =>
-      d > 0 ? formatPercent(d) : dash,
-    );
-    const riseString = new DerivedProperty([measurements.riseTimeProperty, none], (s, dash) =>
-      s > 0 ? formatPeriod(s) : dash,
-    );
-    const fallString = new DerivedProperty([measurements.fallTimeProperty, none], (s, dash) =>
-      s > 0 ? formatPeriod(s) : dash,
-    );
-    const meanString = new DerivedProperty([measurements.meanProperty], formatVoltage);
-    const phaseString = new DerivedProperty([measurements.phaseProperty, none], (deg, dash) =>
-      deg >= 0 ? formatDegrees(deg) : dash,
+    const periodString = derivedString(measurements.periodProperty, (s) => (s > 0 ? formatPeriod(s) : none.value), [
+      none,
+    ]);
+    const vppString = derivedString(measurements.vppProperty, formatVoltage);
+    const vrmsString = derivedString(measurements.vrmsProperty, formatVoltage);
+    const vmaxString = derivedString(measurements.vmaxProperty, formatVoltage);
+    const vminString = derivedString(measurements.vminProperty, formatVoltage);
+    const dutyString = derivedString(measurements.dutyCycleProperty, (d) => (d > 0 ? formatPercent(d) : none.value), [
+      none,
+    ]);
+    const riseString = derivedString(measurements.riseTimeProperty, (s) => (s > 0 ? formatPeriod(s) : none.value), [
+      none,
+    ]);
+    const fallString = derivedString(measurements.fallTimeProperty, (s) => (s > 0 ? formatPeriod(s) : none.value), [
+      none,
+    ]);
+    const meanString = derivedString(measurements.meanProperty, formatVoltage);
+    const phaseString = derivedString(
+      measurements.phaseProperty,
+      (deg) => (deg >= 0 ? formatDegrees(deg) : none.value),
+      [none],
     );
 
     bag.own(

@@ -3,11 +3,13 @@
  *
  * Content for the keyboard-help dialog (the "?" button in the navigation bar).
  * Sliders cover the front-panel knobs. Move Draggable Items covers the
- * trigger-level line on the CRT (arrow keys, shift for a finer step).
+ * trigger-level line on the CRT (arrow keys, shift for a finer step). The
+ * function generator's waveform selector is a combo box.
  */
 
 import {
   BasicActionsKeyboardHelpSection,
+  ComboBoxKeyboardHelpSection,
   MoveDraggableItemsKeyboardHelpSection,
   SliderControlsKeyboardHelpSection,
   TwoColumnKeyboardHelpContent,
@@ -17,7 +19,7 @@ export class OscilloscopeKeyboardHelpContent extends TwoColumnKeyboardHelpConten
   public constructor() {
     super(
       [new SliderControlsKeyboardHelpSection(), new MoveDraggableItemsKeyboardHelpSection()],
-      [new BasicActionsKeyboardHelpSection()],
+      [new ComboBoxKeyboardHelpSection(), new BasicActionsKeyboardHelpSection()],
     );
   }
 }
