@@ -29,6 +29,9 @@ export class AudioInput {
     validValues: [...AUDIO_STATUSES],
   });
 
+  private requestGeneration = 0;
+  private isDisposed = false;
+
   private audioContext: AudioContext | null = null;
   private analyser: AnalyserNode | null = null;
   private mediaStream: MediaStream | null = null;
@@ -93,7 +96,7 @@ export class AudioInput {
    * repeatedly; a no-op while already requesting or active.
    */
   public async start(): Promise<void> {
-    if (this.statusProperty.value === "requesting" || this.isActive) {
+    if (this.isDisposed || this.statusProperty.value === "requesting" || this.isActive) {
       return;
     }
 
@@ -104,26 +107,38 @@ export class AudioInput {
       return;
     }
 
+    const generation = ++this.requestGeneration;
     this.statusProperty.value = "requesting";
     try {
       const stream = await mediaDevices.getUserMedia({ audio: true });
+      if (generation !== this.requestGeneration) {
+        for (const track of stream.getTracks()) {
+          track.stop();
+        }
+        return;
+      }
+      this.mediaStream = stream;
       const context = new AudioContextCtor();
+      this.audioContext = context;
       const analyser = context.createAnalyser();
       analyser.fftSize = this.timeData.length;
+      this.analyser = analyser;
       const source = context.createMediaStreamSource(stream);
+      this.sourceNode = source;
       source.connect(analyser);
 
-      this.mediaStream = stream;
-      this.audioContext = context;
-      this.analyser = analyser;
-      this.sourceNode = source;
       this.sampleRate = context.sampleRate;
 
       if (context.state === "suspended") {
         await context.resume();
       }
-      this.statusProperty.value = "active";
+      if (generation === this.requestGeneration) {
+        this.statusProperty.value = "active";
+      }
     } catch {
+      if (generation !== this.requestGeneration) {
+        return;
+      }
       this.teardown();
       this.statusProperty.value = "denied";
     }
@@ -131,6 +146,7 @@ export class AudioInput {
 
   /** Releases the microphone and audio graph, returning to the idle state. */
   public stop(): void {
+    this.requestGeneration++;
     this.teardown();
     if (this.statusProperty.value === "active" || this.statusProperty.value === "requesting") {
       this.statusProperty.value = "idle";
@@ -220,6 +236,11 @@ export class AudioInput {
   }
 
   public dispose(): void {
+    if (this.isDisposed) {
+      return;
+    }
+    this.isDisposed = true;
+    this.requestGeneration++;
     this.teardown();
     this.statusProperty.dispose();
   }

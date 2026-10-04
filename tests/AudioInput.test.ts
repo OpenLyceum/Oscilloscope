@@ -4,7 +4,7 @@
  * way to exercise the resampling and trigger search against known samples.
  */
 
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { AUDIO_FFT_SIZE, TRACE_SAMPLE_COUNT } from "../src/OscilloscopeConstants.js";
 import { AudioInput } from "../src/oscilloscope-screen/model/AudioInput.js";
 
@@ -112,6 +112,81 @@ describe("AudioInput", () => {
     input.fillTrace(out, 0.01, 0, "rising");
     expect(out.length).toBe(TRACE_SAMPLE_COUNT);
     expect(Array.from(out).some((v) => v !== 0)).toBe(true);
+    input.dispose();
+  });
+});
+
+describe("Microphone request lifecycle", () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
+    vi.unstubAllGlobals();
+  });
+
+  it.each(["stop", "dispose"] as const)("releases a stream delivered after %s", async (cancel) => {
+    let resolveStream!: (stream: MediaStream) => void;
+    const pending = new Promise<MediaStream>((resolve) => {
+      resolveStream = resolve;
+    });
+    vi.stubGlobal("navigator", { mediaDevices: { getUserMedia: vi.fn(() => pending) } });
+    vi.spyOn(window, "AudioContext").mockImplementation(() => {
+      throw new Error("Canceled requests must not create an audio context");
+    });
+    const stopTrack = vi.fn();
+    const input = new AudioInput();
+    const request = input.start();
+    expect(input.statusProperty.value).toBe("requesting");
+    input[cancel]();
+    resolveStream({ getTracks: () => [{ stop: stopTrack }] } as unknown as MediaStream);
+    await expect(request).resolves.toBeUndefined();
+    expect(stopTrack).toHaveBeenCalledOnce();
+    if (cancel === "stop") {
+      expect(input.statusProperty.value).toBe("idle");
+      input.dispose();
+    }
+  });
+});
+
+describe("Microphone resume lifecycle", () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
+    vi.unstubAllGlobals();
+  });
+
+  it("stays idle when stopped while its audio context is resuming", async () => {
+    let resolveResume!: () => void;
+    const pending = new Promise<void>((resolve) => {
+      resolveResume = resolve;
+    });
+    const stopTrack = vi.fn();
+    const close = vi.fn(() => Promise.resolve());
+    const context = {
+      state: "suspended",
+      sampleRate: 44100,
+      createAnalyser: () => ({ fftSize: 0, disconnect: vi.fn() }),
+      createMediaStreamSource: () => ({ connect: vi.fn(), disconnect: vi.fn() }),
+      resume: () => pending,
+      close,
+    };
+    vi.stubGlobal("navigator", {
+      mediaDevices: { getUserMedia: vi.fn(async () => ({ getTracks: () => [{ stop: stopTrack }] })) },
+    });
+    vi.spyOn(window, "AudioContext").mockImplementation(
+      class {
+        constructor() {
+          Object.assign(this, context);
+        }
+      } as unknown as typeof AudioContext,
+    );
+    const input = new AudioInput();
+    const request = input.start();
+    await Promise.resolve();
+    input.stop();
+    resolveResume();
+    await request;
+    expect(input.statusProperty.value).toBe("idle");
+    expect(input.isActive).toBe(false);
+    expect(stopTrack).toHaveBeenCalledOnce();
+    expect(close).toHaveBeenCalledOnce();
     input.dispose();
   });
 });
