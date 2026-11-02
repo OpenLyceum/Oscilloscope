@@ -272,37 +272,19 @@ Baton's compliance check passes. One documented deviation:
   `OscilloscopeColors.ts` would be misleading. The compliance script flags it as a possible
   hardcoded-colors hit; that warning is expected.
 
-
-### `package.json` overrides
-
-JSON cannot carry comments, so the rationale for forced transitive pins lives here. Prefer
-**tilde (`~`) or exact** versions — caret (`^`) lets minors drift under what is meant to be a
-hard pin. Dependabot ignores these three names (see `.github/dependabot.yml`) so it does not
-open PRs that fight the overrides. Revisit when SceneryStack drops or re-pins them upstream.
-
-| Override | Pin | Why |
-|---|---|---|
-| `lodash` | `~4.18.1` | SceneryStack declares `~4.17.12`. Bump clears Dependabot/npm advisories patched in 4.18.x (e.g. GHSA-r5fr-rjxr-66jc, GHSA-f23m-r3pf-42rh). |
-| `three` | `~0.125.2` | SceneryStack declares `^0.104.0`. Floor is 0.125.0 for GHSA-fq6p-x6j3-cmmq (ReDoS). Staying on the 0.125 line avoids a larger API jump; **0.125.x still has open CVEs** (e.g. XSS GHSA-7vvq-7r29-5vg3, fixed only in ≥0.137.0). Remove this override if/when SceneryStack stops depending on `three` or pins a patched line itself. LightPropagation keeps a higher `three` pin — do not force 0.125 there. |
-| `brace-expansion` | `~5.0.12` | Transitive via `vite-plugin-pwa` / Workbox. Clears npm audit (originally GHSA-mh99-v99m-4gvg; keep ≥5.0.9 for GHSA-rgw5-rvv9-x895; ≥5.0.12 for the CPU-DoS advisory). |
-
 ## Testing
-
-Fleet-standard Vitest layout (keep when forking):
 
 | Path | Purpose |
 |---|---|
 | `vitest.config.ts` | `happy-dom` environment; `setupFiles: ["./tests/setup.ts"]`; `execArgv: ["--expose-gc"]` |
 | `tests/setup.ts` | Canvas / AudioContext mocks + `init({ name: "…" })` before SceneryStack imports |
-| `tests/TimeModel.test.ts` | Sample model unit tests — replace with real physics tests |
+| `tests/TimeModel.test.ts` | Play/pause timer |
 | `tests/memory-leak.test.ts` | WeakRef + `forceGC` dispose regression — models **and** every view component with real teardown (display node, cursors, knobs/switches, patch layer, BNC jacks, both readouts, all five panels) |
 | `tests/OscilloscopeScreenView.test.ts` | Which frequency the readout reports, phase-row dashing, persistence chain |
 | `tests/AudioInput.test.ts` | Microphone capture geometry against a stub `AnalyserNode` |
 | `tests/fuzz/fuzz.spec.ts` | Optional Playwright fuzz smoke via joist `?fuzz` |
 | `playwright.config.ts` | Chromium project + Vite webServer for fuzz |
 
-- Put unit tests only under root `tests/`, mirroring `src/` (never co-locate or use `__tests__/`).
-- Run `npm test`. CI runs the suite when a `test` script is present.
 - Expand `memory-leak.test.ts` for any component that adds/removes nodes or links Properties at
   runtime (see OpticsLab for a deep suite). The view cases construct their component against a model
   that **outlives** it, so a missed `unlink` keeps the component reachable and fails the assertion.
@@ -318,26 +300,6 @@ Fleet-standard Vitest layout (keep when forking):
 - Trigger tests assert against **what is drawn**, not what the generator produces — an AC-coupled or
   inverted channel is exactly where the two diverge.
 - Optional: `npm run test:fuzz` / `test:fuzz:quick` (not part of default CI).
-
-## Commands
-
-```bash
-npm run lint && npm run check && npm run build && npm test
-```
-
-`npm run release` runs `npm test` before the version bump, and `src/init.ts` reads `version` from `package.json`, so the About dialog always matches the release.
-
-| Command | Description |
-|---|---|
-| `npm start` / `npm run dev` | Vite dev server |
-| `npm run build` | Type-check + production build |
-| `npm run build:single` | Single-file build mode |
-| `npm run check` | TypeScript (`tsc --noEmit` + scripts project) |
-| `npm run lint` / `npm run fix` | Biome check / auto-fix |
-| `npm test` | Vitest unit tests |
-| `npm run test:fuzz` | Playwright fuzz smoke |
-| `npm run test:fuzz:quick` | 10s fuzz |
-| `npm run icons` | Regenerate PWA icons |
 
 ## Development notes
 
