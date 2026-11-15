@@ -45,6 +45,7 @@ export const UNIT_STRING_PROPERTIES: readonly TReadOnlyProperty<string>[] = [
  * Fills a `{{value}}` unit pattern with an already-rounded decimal string (which uses
  * "."), swapping in the locale's decimal separator. e.g. ("{{value}} V", "-1.50", ",")
  * → "-1,50 V".
+ * @internal Exported for unit tests; not part of the application API.
  */
 export function fillUnitPattern(pattern: string, decimal: string, decimalSeparator: string): string {
   return StringUtils.fillIn(pattern, { value: decimal.replace(".", decimalSeparator) });

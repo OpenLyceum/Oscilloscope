@@ -63,6 +63,7 @@ type SliderRowOptions = {
  * moment the slider reaches either end.
  *
  * Exported for unit testing; the panel is its only production caller.
+ * @internal Exported for unit tests; not part of the application API.
  */
 export function createLog10Property(linearProperty: TProperty<number>, range: Range, bag: DisposalBag): NumberProperty {
   const logRange = new Range(Math.log10(range.min), Math.log10(range.max));
