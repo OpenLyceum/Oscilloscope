@@ -15,7 +15,7 @@ import { AUDIO_FFT_SIZE } from "../../OscilloscopeConstants.js";
 import OscilloscopeNamespace from "../../OscilloscopeNamespace.js";
 
 /** Lifecycle states of the microphone connection, in the order a user meets them. */
-export const AUDIO_STATUSES = ["idle", "requesting", "active", "denied", "unsupported"] as const;
+const AUDIO_STATUSES = ["idle", "requesting", "active", "denied", "unsupported"] as const;
 
 /** A single microphone lifecycle state. */
 export type AudioStatus = (typeof AUDIO_STATUSES)[number];

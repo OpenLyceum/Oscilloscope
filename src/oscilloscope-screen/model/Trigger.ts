@@ -30,7 +30,7 @@ export const TRIGGER_SOURCES = ["ch1", "ch2", "line", "ext"] as const;
 export type TriggerSource = (typeof TRIGGER_SOURCES)[number];
 
 /** Which edge of the signal fires the trigger. */
-export const TRIGGER_SLOPES = ["rising", "falling"] as const;
+const TRIGGER_SLOPES = ["rising", "falling"] as const;
 export type TriggerSlope = (typeof TRIGGER_SLOPES)[number];
 
 /** Trigger arming mode. */

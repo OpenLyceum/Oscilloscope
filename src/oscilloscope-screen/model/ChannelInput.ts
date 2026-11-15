@@ -13,7 +13,7 @@ export const CHANNEL_INPUTS = ["none", "functionGeneratorA", "functionGeneratorB
 export type ChannelInput = (typeof CHANNEL_INPUTS)[number];
 
 /** Source jacks that can feed a BNC (excludes "none"). */
-export const SIGNAL_JACKS = ["functionGeneratorA", "functionGeneratorB", "microphone"] as const;
+const SIGNAL_JACKS = ["functionGeneratorA", "functionGeneratorB", "microphone"] as const;
 
 /** A physical source jack on the generator / mic module. */
 export type SignalJack = (typeof SIGNAL_JACKS)[number];

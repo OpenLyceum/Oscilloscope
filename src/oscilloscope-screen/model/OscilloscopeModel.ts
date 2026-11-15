@@ -60,7 +60,7 @@ import { Trigger } from "./Trigger.js";
  * How the display plots the channels: Y versus time, CH1 (X) versus CH2 (Y), or
  * the frequency spectrum (FFT) of the primary channel.
  */
-export const DISPLAY_MODES = ["yt", "xy", "fft"] as const;
+const DISPLAY_MODES = ["yt", "xy", "fft"] as const;
 export type DisplayMode = (typeof DISPLAY_MODES)[number];
 
 /** The optional CH1±CH2 math trace. */

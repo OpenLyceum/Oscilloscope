@@ -43,8 +43,8 @@ export const DISPLAY_WIDTH = HORIZONTAL_DIVISIONS * DIVISION_SIZE;
 /** Full height of the display drawing area, in screen pixels. */
 export const DISPLAY_HEIGHT = VERTICAL_DIVISIONS * DIVISION_SIZE;
 
-/** Number of samples plotted across the width of the display (one per ~1 px). */
-export const TRACE_SAMPLE_COUNT = DISPLAY_WIDTH;
+/** Number of samples plotted across the width of the display (one per ~1 px). Same value as DISPLAY_WIDTH. */
+export const TRACE_SAMPLE_COUNT = HORIZONTAL_DIVISIONS * DIVISION_SIZE;
 
 // ── On-screen readout overlays (measurement + cursor panels) ──────────────────
 // Shared chrome for the translucent readout panels floated over the CRT face, so
