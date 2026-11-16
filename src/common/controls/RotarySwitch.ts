@@ -68,7 +68,7 @@ export class RotarySwitch<T> extends AccessibleSliderNode {
 
     const indexForValue = (value: T): number => {
       const i = items.findIndex((item) => item.value === value);
-      return i < 0 ? 0 : i;
+      return Math.max(i, 0);
     };
 
     const indexProperty = new NumberProperty(indexForValue(property.value), {

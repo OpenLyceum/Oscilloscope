@@ -25,19 +25,17 @@ export type Waveform = (typeof WAVEFORMS)[number];
  * @returns a value in [-1, 1]
  */
 export function waveformSample(waveform: Waveform, phase: number, duty = 0.5): number {
-  // Noise is aperiodic — a fresh pseudo-random sample every call.
-  if (waveform === "noise") {
-    // Sum of uniforms → roughly bell-shaped, scaled back into [-1, 1].
-    return Math.max(
-      -1,
-      Math.min(1, (dotRandom.nextDouble() + dotRandom.nextDouble() + dotRandom.nextDouble() - 1.5) / 1.5),
-    );
-  }
-
   // Wrap into the [0, 1) fundamental period.
   const p = phase - Math.floor(phase);
 
   switch (waveform) {
+    case "noise":
+      // Noise is aperiodic — a fresh pseudo-random sample every call.
+      // Sum of uniforms → roughly bell-shaped, scaled back into [-1, 1].
+      return Math.max(
+        -1,
+        Math.min(1, (dotRandom.nextDouble() + dotRandom.nextDouble() + dotRandom.nextDouble() - 1.5) / 1.5),
+      );
     case "sine":
       return Math.sin(2 * Math.PI * p);
     case "square":
