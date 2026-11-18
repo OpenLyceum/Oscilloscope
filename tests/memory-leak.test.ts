@@ -20,6 +20,7 @@ import { TimeModel } from "../src/common/TimeModel.js";
 import { StringManager } from "../src/i18n/StringManager.js";
 import { CURSOR_TIME_RANGE } from "../src/OscilloscopeConstants.js";
 import { AudioInput } from "../src/oscilloscope-screen/model/AudioInput.js";
+import { Channel } from "../src/oscilloscope-screen/model/Channel.js";
 import { FunctionGenerator } from "../src/oscilloscope-screen/model/FunctionGenerator.js";
 import { OscilloscopeModel } from "../src/oscilloscope-screen/model/OscilloscopeModel.js";
 import { Trigger } from "../src/oscilloscope-screen/model/Trigger.js";
@@ -329,7 +330,39 @@ describeDisposalLeaks([
   { name: "DisposalBag", create: () => new DisposalBag() },
   { name: "TimeModel", create: () => new TimeModel(), idempotentDispose: true },
   { name: "AudioInput", create: () => new AudioInput() },
+  {
+    name: "Channel",
+    create: () => new Channel({ index: 1, initiallyEnabled: true, initialVoltsPerDivision: 1 }),
+  },
   { name: "FunctionGenerator", create: () => new FunctionGenerator() },
   { name: "OscilloscopeModel", create: () => new OscilloscopeModel() },
   { name: "Trigger", create: () => new Trigger() },
 ]);
+
+// Channel owns every Property it holds, so collection alone would pass without dispose().
+// Assert dispose() tears them down, both directly and through the owning model.
+describe("Channel disposal", () => {
+  const channelProperties = (channel: Channel) => [
+    channel.enabledProperty,
+    channel.voltsPerDivisionProperty,
+    channel.probeProperty,
+    channel.positionProperty,
+    channel.couplingProperty,
+    channel.invertedProperty,
+    channel.inputProperty,
+  ];
+
+  it("Channel.dispose() disposes every owned Property", () => {
+    const channel = new Channel({ index: 2, initiallyEnabled: false, initialVoltsPerDivision: 0.5 });
+    const owned = channelProperties(channel);
+    channel.dispose();
+    expect(owned.map((p) => p.isDisposed)).toEqual(owned.map(() => true));
+  });
+
+  it("OscilloscopeModel.dispose() disposes both channels", () => {
+    const model = new OscilloscopeModel();
+    const owned = [...channelProperties(model.ch1), ...channelProperties(model.ch2)];
+    model.dispose();
+    expect(owned.map((p) => p.isDisposed)).toEqual(owned.map(() => true));
+  });
+});
