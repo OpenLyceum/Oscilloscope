@@ -5,7 +5,11 @@
  */
 
 import { describe, expect, it } from "vitest";
-import { computeMagnitudeSpectrum, largestPowerOfTwoAtMost } from "../src/oscilloscope-screen/model/Spectrum.js";
+import {
+  computeMagnitudeSpectrum,
+  createSpectrumScratch,
+  largestPowerOfTwoAtMost,
+} from "../src/oscilloscope-screen/model/Spectrum.js";
 
 describe("largestPowerOfTwoAtMost", () => {
   it("returns the largest power of two not exceeding n", () => {
@@ -36,17 +40,25 @@ describe("computeMagnitudeSpectrum", () => {
     }
     expect(peakBin).toBe(cycles);
     expect(peak).toBeCloseTo(1); // normalized to the peak bin
+    for (const magnitude of mag) {
+      expect(magnitude).toBeGreaterThanOrEqual(0);
+      expect(magnitude).toBeLessThanOrEqual(1);
+    }
   });
 
-  it("returns values normalized to [0, 1]", () => {
+  it("clears the previous frame when reusing FFT scratch buffers for silence", () => {
     const samples = new Float32Array(256);
     for (let i = 0; i < samples.length; i++) {
-      samples[i] = Math.sin((2 * Math.PI * 5 * i) / samples.length) + 0.3 * Math.random();
+      samples[i] = Math.sin((2 * Math.PI * 5 * i) / samples.length);
     }
-    const mag = computeMagnitudeSpectrum(samples);
-    for (const v of mag) {
-      expect(v).toBeGreaterThanOrEqual(0);
-      expect(v).toBeLessThanOrEqual(1.0001);
-    }
+    const scratch = createSpectrumScratch(samples.length);
+    const tone = computeMagnitudeSpectrum(samples, scratch);
+    expect(tone).toBe(scratch.magnitudes);
+    expect(tone[5]).toBeCloseTo(1);
+
+    samples.fill(0);
+    const silence = computeMagnitudeSpectrum(samples, scratch);
+    expect(silence).toBe(tone);
+    expect(silence).toEqual(new Float32Array(samples.length / 2));
   });
 });
