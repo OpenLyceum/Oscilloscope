@@ -266,11 +266,6 @@ Sim-specific notes:
 
 Baton's compliance check passes. Documented deviations:
 
-- **Hardcoded colors:** `TRANSPARENT_HIT_FILL` in `MeasurementCursorNode.ts` is a hardcoded
-  `rgba(0, 0, 0, 0.01)` rather than a `ProfileColorProperty`. It is a pointer hit-area affordance,
-  not a themed color — it must stay invisible in every color profile, so routing it through
-  `OscilloscopeColors.ts` would be misleading. The compliance script flags it as a possible
-  hardcoded-colors hit; that warning is expected.
 - `memory-leak:VerticalControlPanelColumn`: file-private column; dispose covered by `VerticalControlPanel` leak tests.
 
 ## Testing

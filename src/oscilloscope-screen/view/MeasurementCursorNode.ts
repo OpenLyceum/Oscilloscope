@@ -18,7 +18,7 @@ import { Property, type TProperty, type TReadOnlyProperty } from "scenerystack/a
 import type { Range, Vector2 } from "scenerystack/dot";
 import { Shape } from "scenerystack/kite";
 import { type EmptySelfOptions, optionize } from "scenerystack/phet-core";
-import { DragListener, Node, type NodeOptions, Path, Rectangle } from "scenerystack/scenery";
+import { Color, DragListener, Node, type NodeOptions, Path, Rectangle } from "scenerystack/scenery";
 import { AccessibleSlider, type AccessibleSliderOptions } from "scenerystack/sun";
 import OscilloscopeColors from "../../OscilloscopeColors.js";
 import {
@@ -37,8 +37,6 @@ const CURSOR_LINE_WIDTH = 1;
 const CURSOR_LINE_DASH = [4, 4];
 /** Half-thickness (px) of a cursor's invisible pointer hit target. */
 const CURSOR_HIT_TOLERANCE = 7;
-/** Transparent fill giving the otherwise-invisible cursor hit target a hittable area. */
-const TRANSPARENT_HIT_FILL = "rgba(0, 0, 0, 0.01)";
 
 /** Which axis the cursor measures along. */
 export type CursorOrientation = "time" | "voltage";
@@ -95,10 +93,10 @@ export class MeasurementCursorNode extends AccessibleSliderNode {
     );
     const hit = isTime
       ? new Rectangle(-CURSOR_HIT_TOLERANCE, 0, 2 * CURSOR_HIT_TOLERANCE, DISPLAY_HEIGHT, {
-          fill: TRANSPARENT_HIT_FILL,
+          fill: Color.TRANSPARENT,
         })
       : new Rectangle(0, -CURSOR_HIT_TOLERANCE, DISPLAY_WIDTH, 2 * CURSOR_HIT_TOLERANCE, {
-          fill: TRANSPARENT_HIT_FILL,
+          fill: Color.TRANSPARENT,
         });
 
     this.addChild(hit);
