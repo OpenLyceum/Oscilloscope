@@ -200,7 +200,7 @@ export type OscilloscopeModelOptions = {
 
 export class OscilloscopeModel implements TModel {
   /** Run/Stop clock. Starts running so the trace is live on load. */
-  public readonly timer = new TimeModel(true);
+  public readonly timer = new TimeModel({ initiallyPlaying: true });
 
   /** The synthetic-signal source (outputs A and B). */
   public readonly functionGenerator: FunctionGenerator;

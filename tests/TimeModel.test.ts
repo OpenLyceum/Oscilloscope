@@ -17,7 +17,7 @@ describe("TimeModel", () => {
   });
 
   it("can start playing when constructed with initiallyPlaying", () => {
-    const model = new TimeModel(true);
+    const model = new TimeModel({ initiallyPlaying: true });
     expect(model.isPlayingProperty.value).toBe(true);
     model.dispose();
   });
@@ -30,7 +30,7 @@ describe("TimeModel", () => {
   });
 
   it("accumulates time while playing", () => {
-    const model = new TimeModel(true);
+    const model = new TimeModel({ initiallyPlaying: true });
     model.step(0.5);
     model.step(0.25);
     expect(model.timeProperty.value).toBeCloseTo(0.75);

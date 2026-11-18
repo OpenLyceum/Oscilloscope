@@ -188,7 +188,7 @@ For simulations with animation, compose `TimeModel` into your screen model:
 import { TimeModel } from "../../common/TimeModel.js";
 
 export class MyModel implements TModel {
-  public readonly timer = new TimeModel();   // starts paused; pass true to auto-play
+  public readonly timer = new TimeModel();   // starts paused; { initiallyPlaying: true } to auto-play
 
   public step(dt: number): void {
     this.timer.step(dt);
