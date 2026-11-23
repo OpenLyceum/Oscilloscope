@@ -67,8 +67,8 @@ export class AudioInput {
     if (typeof window === "undefined") {
       return undefined;
     }
-    const w = window as unknown as Record<string, AudioContextConstructor | undefined>;
-    return w["AudioContext"] ?? w["webkitAudioContext"];
+    const audioWindow: typeof window & { webkitAudioContext?: AudioContextConstructor } = window;
+    return audioWindow.AudioContext ?? audioWindow.webkitAudioContext;
   }
 
   /**
