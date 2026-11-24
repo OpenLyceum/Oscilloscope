@@ -11,6 +11,7 @@
  */
 
 import { StringUnionProperty } from "scenerystack/axon";
+import { roundSymmetric } from "scenerystack/dot";
 import { AUDIO_FFT_SIZE } from "../../OscilloscopeConstants.js";
 import OscilloscopeNamespace from "../../OscilloscopeNamespace.js";
 
@@ -197,7 +198,7 @@ export class AudioInput {
 
     analyser.getFloatTimeDomainData(this.timeData);
     const total = this.timeData.length;
-    const windowSamples = Math.min(total, Math.max(2, Math.round(windowSeconds * this.sampleRate)));
+    const windowSamples = Math.min(total, Math.max(2, roundSymmetric(windowSeconds * this.sampleRate)));
 
     // The crossing is centred on the display, so a usable trigger point needs half
     // a window of samples behind it and half ahead. Searching that range — rather
@@ -228,7 +229,7 @@ export class AudioInput {
     const lastOut = out.length - 1;
     const lastWin = windowSamples - 1;
     for (let j = 0; j < out.length; j++) {
-      const offset = lastOut === 0 ? 0 : Math.round((j / lastOut) * lastWin);
+      const offset = lastOut === 0 ? 0 : roundSymmetric((j / lastOut) * lastWin);
       const idx = start - half + offset;
       out[j] = this.timeData[Math.max(0, Math.min(total - 1, idx))] ?? 0;
     }

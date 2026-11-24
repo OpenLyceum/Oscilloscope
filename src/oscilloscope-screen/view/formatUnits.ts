@@ -17,7 +17,7 @@
  */
 
 import type { TReadOnlyProperty } from "scenerystack/axon";
-import { toFixed } from "scenerystack/dot";
+import { roundSymmetric, toFixed } from "scenerystack/dot";
 import { StringUtils } from "scenerystack/phetcommon";
 import { StringManager } from "../../i18n/StringManager.js";
 
@@ -100,12 +100,12 @@ export function formatVoltage(volts: number): string {
 
 /** e.g. 0.5 → "50%". */
 export function formatPercent(fraction: number): string {
-  return fill(units.percentPatternStringProperty, String(Math.round(fraction * 100)));
+  return fill(units.percentPatternStringProperty, String(roundSymmetric(fraction * 100)));
 }
 
 /** e.g. 90 → "90°". */
 export function formatDegrees(degrees: number): string {
-  return fill(units.degreesPatternStringProperty, String(Math.round(degrees)));
+  return fill(units.degreesPatternStringProperty, String(roundSymmetric(degrees)));
 }
 
 /** Screen-position readout in graticule divisions, e.g. -1.5 → "-1.50 div". */

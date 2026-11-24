@@ -52,10 +52,10 @@ export class FunctionGenerator {
   /** Phase of CH2 relative to CH1, in degrees. */
   public readonly phaseProperty: NumberProperty;
 
-  /** Whether additive noise is injected onto the signal. Read-only here; owned by preferences. */
+  /** Whether additive noise is injected onto the signal. Read-only here; ownedProperty by preferences. */
   public readonly noiseEnabledProperty: TReadOnlyProperty<boolean>;
 
-  /** Amplitude of the additive noise, in volts. Read-only here; owned by preferences. */
+  /** Amplitude of the additive noise, in volts. Read-only here; ownedProperty by preferences. */
   public readonly noiseAmplitudeProperty: TReadOnlyProperty<number>;
 
   // Concrete references to the noise Properties only when this generator owns
@@ -91,20 +91,20 @@ export class FunctionGenerator {
       this.noiseEnabledProperty = noiseEnabledProperty;
       this.ownedNoiseEnabled = null;
     } else {
-      const owned = new BooleanProperty(false);
-      this.noiseEnabledProperty = owned;
-      this.ownedNoiseEnabled = owned;
+      const ownedProperty = new BooleanProperty(false);
+      this.noiseEnabledProperty = ownedProperty;
+      this.ownedNoiseEnabled = ownedProperty;
     }
     if (noiseAmplitudeProperty) {
       this.noiseAmplitudeProperty = noiseAmplitudeProperty;
       this.ownedNoiseAmplitude = null;
     } else {
-      const owned = new NumberProperty(FG_DEFAULT_NOISE_AMPLITUDE, {
+      const ownedProperty = new NumberProperty(FG_DEFAULT_NOISE_AMPLITUDE, {
         range: FG_NOISE_AMPLITUDE_RANGE,
         units: "V",
       });
-      this.noiseAmplitudeProperty = owned;
-      this.ownedNoiseAmplitude = owned;
+      this.noiseAmplitudeProperty = ownedProperty;
+      this.ownedNoiseAmplitude = ownedProperty;
     }
   }
 
@@ -160,7 +160,7 @@ export class FunctionGenerator {
     this.offsetProperty.reset();
     this.dutyCycleProperty.reset();
     this.phaseProperty.reset();
-    // Injected (preference-owned) noise Properties are not reset by Reset All.
+    // Injected (preference-ownedProperty) noise Properties are not reset by Reset All.
     this.ownedNoiseEnabled?.reset();
     this.ownedNoiseAmplitude?.reset();
   }

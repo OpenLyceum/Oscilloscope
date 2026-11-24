@@ -76,17 +76,17 @@ export class PatchCableLayer extends Node {
     const model = options.model;
 
     const connectedTo = (jack: SignalJack) => {
-      const derived = new DerivedProperty(
+      const derivedProperty = new DerivedProperty(
         [model.ch1.inputProperty, model.ch2.inputProperty],
         (a, b) => a === jack || b === jack,
       );
-      this.bag.own(derived);
-      return derived;
+      this.bag.own(derivedProperty);
+      return derivedProperty;
     };
     const patchedTo = (channelInput: typeof model.ch1.inputProperty) => {
-      const derived = new DerivedProperty([channelInput], (input) => input !== "none");
-      this.bag.own(derived);
-      return derived;
+      const derivedProperty = new DerivedProperty([channelInput], (input) => input !== "none");
+      this.bag.own(derivedProperty);
+      return derivedProperty;
     };
 
     this.sourceJackA = new BncJackNode({

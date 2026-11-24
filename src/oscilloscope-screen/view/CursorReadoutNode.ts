@@ -99,10 +99,10 @@ export class CursorReadoutNode extends Rectangle {
       ],
     });
 
-    const ytVisible = new DerivedProperty([measurements.displayModeProperty], (mode) => mode === "yt");
-    const fftVisible = new DerivedProperty([measurements.displayModeProperty], (mode) => mode === "fft");
-    ytGrid.visibleProperty = ytVisible;
-    fftGrid.visibleProperty = fftVisible;
+    const ytVisibleProperty = new DerivedProperty([measurements.displayModeProperty], (mode) => mode === "yt");
+    const fftVisibleProperty = new DerivedProperty([measurements.displayModeProperty], (mode) => mode === "fft");
+    ytGrid.visibleProperty = ytVisibleProperty;
+    fftGrid.visibleProperty = fftVisibleProperty;
 
     const stack = new Node({ children: [ytGrid, fftGrid] });
 
@@ -129,8 +129,8 @@ export class CursorReadoutNode extends Rectangle {
       f1String,
       f2String,
       dfString,
-      ytVisible,
-      fftVisible,
+      ytVisibleProperty,
+      fftVisibleProperty,
       ytGrid,
       fftGrid,
       stack,
