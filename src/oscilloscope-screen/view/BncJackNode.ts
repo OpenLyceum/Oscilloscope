@@ -39,7 +39,7 @@ export class BncJackNode extends Node {
     const radius = options.radius ?? 14;
     const pinFill = options.pinFill ?? OscilloscopeColors.textColorProperty;
 
-    const ringFill = new DerivedProperty(
+    const ringFillProperty = new DerivedProperty(
       [
         options.connectedProperty,
         OscilloscopeColors.bncJackConnectedColorProperty,
@@ -49,7 +49,7 @@ export class BncJackNode extends Node {
     );
 
     const outer = new Circle(radius, {
-      fill: ringFill,
+      fill: ringFillProperty,
       stroke: OscilloscopeColors.panelBorderColorProperty,
       lineWidth: 2,
     });
@@ -87,10 +87,10 @@ export class BncJackNode extends Node {
       fire: () => options.onActivate(),
     });
     this.bag.addInputListener(this, fireListener);
-    // `ringFill` links the connected-state Property (which the patch layer derives
+    // `ringFillProperty` links the connected-state Property (which the patch layer derives
     // from model state) and two sim-lifetime color Properties; the Texts and Circles
     // hold color/string listeners of their own. None are released by Node.dispose().
-    this.bag.own(ringFill, outer, inner, pin, body, label);
+    this.bag.own(ringFillProperty, outer, inner, pin, body, label);
   }
 
   /** Global coordinates of the jack pin (for drawing cables). */

@@ -20,6 +20,7 @@ export function triggerBlobDownload(blob: Blob, filename: string): void {
   anchor.click();
   anchor.remove();
   // Revoke on the next tick so the download has a chance to start.
+  // biome-ignore lint/plugin/no-native-timer: async host/hardware delay (not sim step)
   setTimeout(() => URL.revokeObjectURL(url), 0);
 }
 
